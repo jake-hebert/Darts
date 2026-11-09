@@ -13,7 +13,8 @@ import {
   DARTS_PER_TURN,
 } from '../games/cricket.js'
 
-const OTHER_NUMBERS = Array.from({ length: 14 }, (_, i) => i + 1)
+// Super Cricket keypad: every number (bonus targets count on any of them) + bull.
+const KEYPAD = [...Array.from({ length: 20 }, (_, i) => i + 1), 25]
 
 export default function Cricket({ config, onExit, onRestart }) {
   const game = getGame(config.gameId)
@@ -46,7 +47,7 @@ export default function Cricket({ config, onExit, onRestart }) {
   }
 
   return (
-    <div className="screen game cricket">
+    <div className={`screen game cricket ${isSuper ? 'super' : ''}`}>
       <header className="topbar">
         <button className="icon-btn" onClick={exit} aria-label="Exit game">×</button>
         <h2>{game.name}</h2>
@@ -140,7 +141,11 @@ export default function Cricket({ config, onExit, onRestart }) {
           </div>
 
           {!s.lastTurn && !s.darts.length && (
-            <div className="last-play">Tap a number to score · Double / Triple first</div>
+            <div className="last-play">
+              {isSuper
+                ? 'Double / Triple first, then the number'
+                : 'Tap a number to score · Double / Triple first'}
+            </div>
           )}
 
           {s.lastTurn && !s.darts.length && (
@@ -173,10 +178,15 @@ export default function Cricket({ config, onExit, onRestart }) {
           </div>
 
           {isSuper && (
-            <div className="other-numbers">
-              {OTHER_NUMBERS.map((n) => (
-                <button key={n} onClick={() => hit(n)}>
-                  {n}
+            <div className="keypad">
+              {KEYPAD.map((n) => (
+                <button
+                  key={n}
+                  className={n >= 15 ? 'cricket-num' : ''}
+                  onClick={() => hit(n)}
+                  disabled={n === 25 && mult === 3}
+                >
+                  {n === 25 ? 'Bull' : n}
                 </button>
               ))}
             </div>

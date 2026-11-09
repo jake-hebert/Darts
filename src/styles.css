@@ -484,12 +484,23 @@ input {
 .pad-btn.mult { background: var(--panel-2); border: 2px solid var(--line); }
 .pad-btn.mult.armed { background: var(--red); border-color: var(--red); }
 
-.other-numbers { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-.other-numbers button {
+.keypad { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.keypad button {
   min-height: 42px;
   border-radius: 10px;
   background: var(--panel);
   font-weight: 700;
   font-size: 16px;
 }
-.other-numbers button:active { background: var(--panel-2); }
+.keypad button:active:not(:disabled) { background: var(--panel-2); }
+.keypad button:disabled { opacity: 0.3; }
+.keypad button.cricket-num { color: var(--cream); border: 1px solid var(--line); }
+
+/* Super Cricket has a full keypad, so tighten the board to fit on screen. */
+.cricket.super .board-row { min-height: 38px; }
+.cricket.super .board-row.bonus { min-height: 32px; }
+.cricket.super .board-row.head { min-height: 46px; }
+.cricket.super .target { font-size: 19px; }
+.cricket.super .marks { width: 26px; height: 26px; }
+.cricket.super .ck-pad .pad-btn { min-height: 48px; }
+.cricket.super .board-row.bonus .target { font-size: 14px; }
