@@ -1,8 +1,11 @@
 import { getGame } from '../games.js'
 import RealBaseball from './RealBaseball.jsx'
+import Cricket from './Cricket.jsx'
 
 const SCREENS = {
   'real-baseball': RealBaseball,
+  cricket: Cricket,
+  'super-cricket': Cricket,
 }
 
 export default function Game(props) {
